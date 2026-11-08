@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PUSHPA RAJ: THE SYNDICATE — Official Portal</title>
+  <meta name="description" content="What if Pushpa had a website? Enter the clandestine world of Pushpa Raj Syndicate — Seshachalam Red Sandalwood Empire, interactive 3D timber vault, consignment radar, and Syndicate ID clearance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=4">
+  <meta name="theme-color" content="#0e0b0a">
+  <!-- Three.js CDN -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- OrbitControls CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body class="theme-syndicate">
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <div class="film-grain" aria-hidden="true"></div>
+  <!-- Dynamic Ambient Particle Canvas -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Ambient Sound HUD & Status Bar -->
+  <header class="top-nav">
+    <div class="nav-brand">
+      <img src="assets/syndicate_emblem.jpg" alt="Syndicate Crest" class="brand-crest">
+      <div class="brand-text">
+        <span class="brand-title">PUSHPA RAJ</span>
+        <span class="brand-sub">SESHACHALAM SYNDICATE • ESTD 2021</span>
+      </div>
+    </div>
+    
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#vault-3d" data-spy="vault-3d">Vault</a>
+      <a href="#radar-section" data-spy="radar-section">Radar</a>
+      <a href="#syndicate-pass" data-spy="syndicate-pass">Pass</a>
+      <a href="#commandments" data-spy="commandments">Code</a>
+    </nav>
+
+    <div class="nav-status-pills">
+      <div class="status-pill live-pill">
+        <span class="pulse-dot"></span>
+        <span>RADAR: ACTIVE (CLEAR)</span>
+      </div>
+      <div class="status-pill timber-pill">
+        <span class="gold-icon">🪵</span>
+        <span id="nav-timber-price">RAKTA CHANDANAM: ₹1.45 Cr / MT</span>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button id="btn-audio-toggle" class="audio-btn" type="button" aria-pressed="false" title="Toggle Cinematic Jungle Soundscape">
+        <span class="audio-icon" id="audio-icon">🔇</span>
+        <span class="audio-label" id="audio-label">ATMOSPHERE: OFF</span>
+      </button>
+      <button id="btn-jhukega-special" class="special-action-btn" type="button">
+        <span class="fire-emoji">🔥</span>
+        <span>THAGGEDHE LE</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Hero Section with Dynamic Multi-layer Cinematic Parallax -->
+  <section class="hero-section" id="hero-section">
+    <!-- Dynamic Parallax Background Layers -->
+    <div class="hero-bg-layer hero-bg-mountains" id="hero-bg-mountains"></div>
+    <div class="hero-bg-layer hero-bg-vignette"></div>
+    <div class="hero-bg-layer hero-bg-ground-glow"></div>
+
+    <div class="hero-grid">
+      <!-- Left: Lore & Command Center -->
+      <div class="hero-content" id="hero-content">
+        <div class="syndicate-badge-row">
+          <span class="badge-tag red-tag"><span class="tag-icon">🌲</span> SESHACHALAM FOREST RESERVE</span>
+          <span class="badge-tag gold-tag"><span class="tag-icon">👑</span> SUPREME CARTEL MONOPOLY</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="title-sub">PUSHPA RAJ</span>
+          <span class="title-main">RULE THE FOREST.</span>
+          <span class="title-glow">OWN THE WORLD.</span>
+        </h1>
+        <p class="hero-manifesto">
+          "Flower anukuntiva? Fire-u! Red Sandalwood isn't just timber—it's raw blood and sovereign power. From the deepest mist of Seshachalam ghats to the ports of Tokyo and London, the syndicate answers to only one king."
+        </p>
+
+        <!-- Dynamic Stats Matrix with Golden Outlined Icons -->
+        <div class="stats-matrix">
+          <div class="reveal stat-card">
+            <div class="stat-card-icon">🚚</div>
+            <div class="stat-num" id="stat-consignments">4,820</div>
+            <div class="stat-label">TONNES SMUGGLED</div>
+          </div>
+          <div class="reveal stat-card">
+            <div class="stat-card-icon">🛡️</div>
+            <div class="stat-num">99.8%</div>
+            <div class="stat-label">CHECKPOINT EVASION</div>
+          </div>
+          <div class="reveal stat-card">
+            <div class="stat-card-icon">👥</div>
+            <div class="stat-num" id="stat-operatives">18,500+</div>
+            <div class="stat-label">FOREST OPERATIVES</div>
+          </div>
+          <div class="reveal stat-card gold-border">
+            <div class="stat-card-icon">🎯</div>
+            <div class="stat-num">0%</div>
+            <div class="stat-label">JHUNKE KA CHANCE</div>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="#vault-3d" class="btn btn-primary" id="btn-inspect-3d">
+            <span class="btn-icon">🪵</span>
+            <span>INSPECT 3D TIMBER VAULT</span>
+          </a>
+          <a href="#syndicate-pass" class="btn btn-secondary" id="btn-join-syndicate">
+            <span class="btn-icon">🪪</span>
+            <span>GET CLEARANCE ID PASS</span>
+          </a>
+          <a href="#radar-section" class="btn btn-ghost">
+            <span class="btn-icon">📡</span>
+            <span>CONVOY RADAR</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Cinematic Kingpin Visual Card with 3D Depth & Overlapping Sandalwood Logs -->
+      <div class="hero-visual-card" id="hero-visual-card">
+        <div class="visual-card-inner" id="visual-card-inner">
+          <div class="visual-frame">
+            <img src="assets/hero_pushpa.jpg" alt="Pushpa Raj - Thaggedhe Le" class="kingpin-portrait" width="620" height="450" fetchpriority="high">
+            <div class="visual-glare" id="visual-glare"></div>
+            <div class="visual-overlay"></div>
+            <div class="visual-tagline">
+              <span class="quote-symbol">“</span>
+              <span class="quote-text">Pushpa... Pushpa Raj. Thaggedhe Le!</span>
+            </div>
+            <div class="axe-stamp">
+              <img src="assets/syndicate_emblem.jpg" alt="Crest stamp" class="mini-crest">
+              <span>SEALED BY PUSHPARAJ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cut Red Sandalwood Timber Foreground Object Overlapping Corner -->
+        <div class="sandalwood-corner-logs" id="hero-corner-logs">
+          <div class="corner-logs-frame">
+            <img src="assets/sandalwood_foreground_logs.jpg" alt="Red Sandalwood Log" class="corner-log-img">
+            <div class="log-vignette-blend"></div>
+            <div class="log-embers-glow"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Market Ticker -->
+    <div class="ticker-wrapper">
+      <div class="ticker-label"><span>LIVE RSX SYNDICATE FEED</span></div>
+      <div class="ticker-viewport">
+        <div class="ticker-track" id="ticker-track">
+          <div class="ticker-item"><span>RAKTA CHANDANAM (GRADE-A):</span> <strong class="text-green">₹14,500/KG (+12.4%)</strong></div>
+          <div class="ticker-item"><span>SESH-ALPHA HARVEST:</span> <strong class="text-gold">420 LOGS READY</strong></div>
+          <div class="ticker-item"><span>POLICE ENCOUNTER RISK:</span> <strong class="text-red">LOW (GHAT CLEARED)</strong></div>
+          <div class="ticker-item"><span>CONTAINER SHIP "RANI-9":</span> <strong class="text-green">DISPATCHED TO SHANGHAI</strong></div>
+          <div class="ticker-item"><span>SPECIAL STRIKE AXES:</span> <strong class="text-gold">500 CUSTOM FORGED</strong></div>
+          <div class="ticker-item"><span>FOREST RESERVE YIELD:</span> <strong class="text-green">PEAK MONSOON DRIFT</strong></div>
+          <!-- Loop duplicate for seamless continuous ticker -->
+          <div class="ticker-item" aria-hidden="true"><span>RAKTA CHANDANAM (GRADE-A):</span> <strong class="text-green">₹14,500/KG (+12.4%)</strong></div>
+          <div class="ticker-item" aria-hidden="true"><span>SESH-ALPHA HARVEST:</span> <strong class="text-gold">420 LOGS READY</strong></div>
+          <div class="ticker-item" aria-hidden="true"><span>POLICE ENCOUNTER RISK:</span> <strong class="text-red">LOW (GHAT CLEARED)</strong></div>
+          <div class="ticker-item" aria-hidden="true"><span>CONTAINER SHIP "RANI-9":</span> <strong class="text-green">DISPATCHED TO SHANGHAI</strong></div>
+          <div class="ticker-item" aria-hidden="true"><span>SPECIAL STRIKE AXES:</span> <strong class="text-gold">500 CUSTOM FORGED</strong></div>
+          <div class="ticker-item" aria-hidden="true"><span>FOREST RESERVE YIELD:</span> <strong class="text-green">PEAK MONSOON DRIFT</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive 3D Red Sandalwood & Axe Vault Section -->
+  <section class="section vault-section" id="vault-3d">
+    <div class="reveal section-header">
+      <div class="section-tag">INTERACTIVE WEBGL 3D LABORATORY</div>
+      <h2 class="section-title">THE 3D RED SANDALWOOD VAULT</h2>
+      <p class="section-desc">Rotate, zoom, and inspect Pushpa Raj's certified grade-A Red Sandalwood timber logs and his iconic forged combat axe in real-time 3D.</p>
+    </div>
+
+    <div class="vault-container">
+      <div class="vault-3d-wrapper">
+        <!-- 3D Canvas Canvas container -->
+        <div id="three-canvas-container" class="three-container">
+          <div class="canvas-loader" id="canvas-loader">
+            <div class="loader-spinner"></div>
+            <span>IGNITING 3D ENGINE...</span>
+          </div>
+          <div class="canvas-controls-hint">
+            <span>🖱️ Drag to rotate 360° | Scroll to Zoom | Right click to Pan</span>
+          </div>
+        </div>
+
+        <!-- 3D Viewport Controls & HUD -->
+        <div class="vault-hud">
+          <div class="model-switch-pills">
+            <button type="button" class="model-btn active" id="btn-model-wood" data-model="log">
+              <span>🪵</span> 3D Red Sandalwood Log
+            </button>
+            <button type="button" class="model-btn" id="btn-model-axe" data-model="axe">
+              <span>🪓</span> Pushpa's Forged Axe
+            </button>
+          </div>
+
+          <div class="spec-readout" id="spec-readout">
+            <div class="spec-header">
+              <span class="spec-code" id="spec-code">SPEC: RC-GRADE-A1</span>
+              <span class="spec-status text-green">CERTIFIED VIRGIN WOOD</span>
+            </div>
+            <div class="spec-rows">
+              <div class="spec-item">
+                <span class="label">Density:</span>
+                <span class="val" id="spec-density">1,240 kg/m³ (Sinks in Water)</span>
+              </div>
+              <div class="spec-item">
+                <span class="label">Color Profile:</span>
+                <span class="val text-red" id="spec-color">Deep Crimson Sangria (Santalin Rich)</span>
+              </div>
+              <div class="spec-item">
+                <span class="label">Harvest Location:</span>
+                <span class="val" id="spec-origin">Seshachalam Biosphere Reserve (Secret Sector 9)</span>
+              </div>
+              <div class="spec-item">
+                <span class="label">Market Value:</span>
+                <span class="val text-gold" id="spec-val">₹ 4.85 Crores / Container</span>
+              </div>
+            </div>
+            <div class="spec-actions">
+              <button type="button" class="action-btn-sm" id="btn-ember-burst">
+                <span>💥</span> Release Fire Embers
+              </button>
+              <button type="button" class="action-btn-sm" id="btn-reset-cam">
+                <span>🔄</span> Reset 3D View
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- High-res Timber Showcase Card -->
+      <div class="vault-side-panel">
+        <div class="reveal timber-photo-card">
+          <img src="assets/sandalwood_timber.jpg" alt="Red Sandalwood Log Stack" class="panel-img" loading="lazy" decoding="async">
+          <div class="photo-info">
+            <span class="timber-label">PHOTOREALISTIC HARVEST SPECIMEN</span>
+            <p>Every cut of Rakta Chandanam boasts distinct wavy grain structures and natural amber resin droplets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Smuggling Route & Convoy Radar -->
+  <section class="section radar-section" id="radar-section">
+    <div class="reveal section-header">
+      <div class="section-tag">TACTICAL COMMAND & CONTROL</div>
+      <h2 class="section-title">THE CONVOY RADAR & GHAT ROUTES</h2>
+      <p class="section-desc">Live simulation of modified convoy lorries transporting red gold across forest checkposts into deep international waterways.</p>
+    </div>
+
+    <div class="radar-layout">
+      <!-- Interactive Tactical Map -->
+      <div class="reveal tactical-radar-panel">
+        <div class="radar-screen">
+          <div class="radar-scan-line"></div>
+          <div class="radar-rings">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+          </div>
+          
+          <!-- Waypoint Nodes -->
+          <div class="map-node active-node" role="button" tabindex="0" style="top: 75%; left: 18%;" data-node="seshachalam">
+            <div class="node-marker"></div>
+            <div class="node-tooltip">
+              <strong>ORIGIN: Seshachalam Alpha</strong>
+              <span>Loading 12 Trucks • Safe</span>
+            </div>
+          </div>
+
+          <div class="map-node active-node" role="button" tabindex="0" style="top: 55%; left: 38%;" data-node="tirupati">
+            <div class="node-marker alert-marker"></div>
+            <div class="node-tooltip">
+              <strong>CHECKPOST: Tirupati Ghats</strong>
+              <span>Forest Patrol Evaded • Diverting to Riverbed</span>
+            </div>
+          </div>
+
+          <div class="map-node active-node" role="button" tabindex="0" style="top: 42%; left: 58%;" data-node="river">
+            <div class="node-marker"></div>
+            <div class="node-tooltip">
+              <strong>RIVER ROUTE: Swarnamukhi</strong>
+              <span>Underwater Bamboo Rafts Moving</span>
+            </div>
+          </div>
+
+          <div class="map-node active-node" role="button" tabindex="0" style="top: 25%; left: 80%;" data-node="port">
+            <div class="node-marker gold-marker"></div>
+            <div class="node-tooltip">
+              <strong>DESTINATION: Bay Port Secret Dock</strong>
+              <span>Container Cargo "TIGER-X" • Ready for Tokyo</span>
+            </div>
+          </div>
+
+          <!-- Route SVG Overlay -->
+          <svg class="radar-route-svg" viewBox="0 0 800 450">
+            <path class="route-path" d="M 144 337 Q 304 247 464 189 T 640 112" />
+            <circle class="truck-pulsar" r="6">
+              <animateMotion path="M 144 337 Q 304 247 464 189 T 640 112" dur="7s" repeatCount="indefinite" />
+            </circle>
+          </svg>
+        </div>
+
+        <div class="radar-footer">
+          <div class="radar-telemetry">
+            <span class="tele-item"><strong>CURRENT ACTIVE CONVOY:</strong> CONVOY-AP-03-RED</span>
+            <span class="tele-item"><strong>PAYLOAD:</strong> 18.5 TONNES (GRADE-A)</span>
+            <span class="tele-item"><strong>SHEANGAR ESCORT:</strong> 40 AXE OPERATIVES</span>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline" id="btn-ping-convoy">PING CONVOY GPS</button>
+        </div>
+      </div>
+
+      <!-- Convoy Night Visual & Details -->
+      <div class="reveal convoy-card">
+        <div class="convoy-img-wrap">
+          <img src="assets/convoy_night.jpg" alt="Convoy trucks in forest night" class="convoy-img" loading="lazy" decoding="async">
+          <div class="convoy-badge">NIGHT CONVOY DRIFT • AP-03-93</div>
+        </div>
+        <div class="convoy-intel">
+          <h3>The Forest River Trick</h3>
+          <p>
+            When Shekhawat and the forest task force block the highway checkpoints, the logs don't ride the road—they sink beneath the river bed tied with heavy stones, floating seamlessly past searchlights.
+          </p>
+          <div class="tactic-tags">
+            <span class="tactic-pill">Underwater Timber Buoys</span>
+            <span class="tactic-pill">Dual-Tank Milk Tankers</span>
+            <span class="tactic-pill">Night Ghat Diversion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Syndicate Clearance ID Pass Generator -->
+  <section class="section id-pass-section" id="syndicate-pass">
+    <div class="reveal section-header">
+      <div class="section-tag">RECRUITMENT & LOYALTY PROTOCOL</div>
+      <h2 class="section-title">JOIN THE PUSHPA RAJ SYNDICATE</h2>
+      <p class="section-desc">Generate your official, tamper-proof Syndicate Clearance Pass authorized by Pushpa Raj himself.</p>
+    </div>
+
+    <div class="pass-maker-grid">
+      <!-- Input Form -->
+      <div class="reveal pass-form-card">
+        <div class="form-title">
+          <span>OPERATIVE REQUISITION FORM</span>
+          <small>Fill details to mint your cartel identity</small>
+        </div>
+
+        <div class="form-group">
+          <label for="input-name">OPERATIVE FULL NAME</label>
+          <input type="text" id="input-name" placeholder="e.g. Vikramaditya Reddy" maxlength="40" autocomplete="off" value="Vikramaditya Reddy">
+        </div>
+
+        <div class="form-group">
+          <label for="input-codename">STREET ALIAS / CODENAME</label>
+          <input type="text" id="input-codename" placeholder="e.g. Firebrand, Tiger, Blade" maxlength="24" autocomplete="off" value="Reddy Tiger">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="select-role">SYNDICATE DESIGNATION</label>
+            <select id="select-role">
+              <option value="Axe Woodcutter (Forest Commando)">🪓 Axe Woodcutter (Forest Commando)</option>
+              <option value="Heavy Ghat Lorry Pilot">🚚 Heavy Ghat Lorry Pilot</option>
+              <option value="Tactical Forest Scout">🏹 Tactical Forest Scout</option>
+              <option value="Undercover Port Logistics Chief">🚢 Undercover Port Logistics Chief</option>
+              <option value="High Command Enforcer" selected>⚡ High Command Enforcer</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="select-sector">ASSIGNED SECTOR</label>
+            <select id="select-sector">
+              <option value="Seshachalam Deep Ridge (Sector 01)">Seshachalam Deep Ridge (Sector 01)</option>
+              <option value="Tirupati Ghat Highway (Sector 04)">Tirupati Ghat Highway (Sector 04)</option>
+              <option value="Chennai Port Dock 14 (Sector 07)">Chennai Port Dock 14 (Sector 07)</option>
+              <option value="Tokyo Global Hub (Overseas)">Tokyo Global Hub (Overseas)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-container">
+            <input type="checkbox" id="check-oath" checked>
+            <span class="checkmark"></span>
+            <span class="checkbox-text">I swear by blood never to bow down (Jhukega Nahi) to any authority or forest squad.</span>
+          </label>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block" id="btn-generate-pass">
+          <span>🪓</span> MINT OFFICIAL CLEARANCE PASS
+        </button>
+      </div>
+
+      <!-- Live Generated Syndicate Pass Preview -->
+      <div class="pass-preview-wrapper">
+        <div class="syndicate-pass-card" id="syndicate-pass-card">
+          <div class="pass-header">
+            <img src="assets/syndicate_emblem.jpg" alt="Syndicate Badge" class="pass-emblem">
+            <div class="pass-titles">
+              <span class="pass-super">SESHACHALAM AUTONOMOUS SYNDICATE</span>
+              <span class="pass-main">PUSHPA RAJ CARTEL PASS</span>
+              <span class="pass-classification">OFFICIAL GRADE-A CLEARANCE</span>
+            </div>
+            <div class="pass-stamp">APPROVED</div>
+          </div>
+
+          <div class="pass-body">
+            <div class="pass-avatar-box">
+              <div class="avatar-photo-mock">
+                <span class="avatar-icon">🪓</span>
+                <span class="avatar-status">STATUS: FEARLESS</span>
+              </div>
+              <div class="pass-id-serial">
+                <span class="serial-label">REGISTRATION ID:</span>
+                <strong id="card-serial">PR-2024-8849-X</strong>
+              </div>
+            </div>
+
+            <div class="pass-details-table">
+              <div class="pass-row">
+                <span class="prop-label">OPERATIVE:</span>
+                <span class="prop-val" id="card-name">VIKRAMADITYA REDDY</span>
+              </div>
+              <div class="pass-row">
+                <span class="prop-label">CODENAME:</span>
+                <span class="prop-val text-gold" id="card-alias">"REDDY TIGER"</span>
+              </div>
+              <div class="pass-row">
+                <span class="prop-label">ROLE:</span>
+                <span class="prop-val text-red" id="card-role">HIGH COMMAND ENFORCER</span>
+              </div>
+              <div class="pass-row">
+                <span class="prop-label">STATION:</span>
+                <span class="prop-val" id="card-sector">SESHACHALAM DEEP RIDGE (SECTOR 01)</span>
+              </div>
+              <div class="pass-row">
+                <span class="prop-label">CLEARANCE LEVEL:</span>
+                <span class="prop-val text-gold">TIER-1 (DIRECT ACCESS TO PUSHPA)</span>
+              </div>
+              <div class="pass-row">
+                <span class="prop-label">COMMANDER:</span>
+                <span class="prop-val">PUSHPA RAJ</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pass-footer">
+            <div class="barcode-box">
+              <div class="mock-barcode">|||| | |||||| || ||||||| ||| |||| | |||||||</div>
+              <span class="barcode-text">VERIFIED BY SESH-COMMAND • THAGGEDHE LE</span>
+            </div>
+            <div class="pushpa-signature">
+              <span class="sig-text">Pushpa Raj</span>
+              <span class="sig-title">SUPREME LEADER</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pass-actions">
+          <button type="button" class="btn btn-secondary" id="btn-print-pass">
+            <span>🖨️</span> PRINT / SAVE PASS
+          </button>
+          <button type="button" class="btn btn-ghost" id="btn-share-pass">
+            <span>📋</span> COPY REGISTRATION SERIAL
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pushpa's Rule Commandments Section -->
+  <section class="section rule-section" id="commandments">
+    <div class="reveal section-header">
+      <div class="section-tag">THE UNBROKEN CODE</div>
+      <h2 class="section-title">THE 5 COMMANDMENTS OF PUSHPA RAJ</h2>
+      <p class="section-desc">The principles that turned a daily-wage woodcutter into the emperor of the underworld.</p>
+    </div>
+
+    <div class="rules-grid">
+      <div class="reveal rule-card">
+        <div class="rule-num">01</div>
+        <h3 class="rule-title">Jhukega Nahi (Never Bow Down)</h3>
+        <p>No matter the uniform, the police squad, or the international cartel—your chin stays up and your gaze stays unflinching.</p>
+      </div>
+
+      <div class="reveal rule-card">
+        <div class="rule-num">02</div>
+        <h3 class="rule-title">Know The Timber's Soul</h3>
+        <p>A true woodcutter doesn't just chop; he smells the red sap, listens to the falling trunk, and respects the Seshachalam soil.</p>
+      </div>
+
+      <div class="reveal rule-card">
+        <div class="rule-num">03</div>
+        <h3 class="rule-title">Pay Every Worker First</h3>
+        <p>The daily axe-men are the true backbone. Before the syndicates count their crores, the forest brothers receive their share in gold.</p>
+      </div>
+
+      <div class="reveal rule-card">
+        <div class="rule-num">04</div>
+        <h3 class="rule-title">Brain Above Brute Force</h3>
+        <p>When they block the road, use the river. When they guard the river, use the milk tankers. Outsmart them before you strike.</p>
+      </div>
+
+      <div class="reveal rule-card">
+        <div class="rule-num">05</div>
+        <h3 class="rule-title">Flower Nahi, Fire Hai</h3>
+        <p>Never mistake humility or calmness for weakness. When the spark touches the timber, it consumes everything in its path.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fullscreen Thaggedhe Le Modal FX -->
+  <div class="modal-overlay" id="thaggedhe-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <div class="fire-flame-icon">🔥🪓🔥</div>
+      <h2 class="modal-fire-title" id="modal-title">PUSHPA... PUSHPA RAJ!</h2>
+      <p class="modal-quote">"JHUKEGA NAHI SAALA! THAGGEDHE LE!"</p>
+      <div class="modal-emblem-wrap">
+        <img src="assets/syndicate_emblem.jpg" alt="Emblem" class="modal-emblem">
+      </div>
+      <p class="modal-sub">You have triggered the Supreme Kingpin Mode. Seshachalam forest bows to no one.</p>
+      <button type="button" class="btn btn-primary" id="btn-close-modal">I SWEAR LOYALTY</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="syndicate-footer">
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-brand">
+          <img src="assets/syndicate_emblem.jpg" alt="Syndicate Crest" class="footer-crest">
+          <span>PUSHPA RAJ SYNDICATE</span>
+        </div>
+        <p>The clandestine digital portal for the Seshachalam Red Sandalwood Empire. Inspired by the blockbuster Indian cinematic universe.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>SYNDICATE SECTORS</h4>
+        <ul>
+          <li><a href="#vault-3d">3D Red Sandalwood Vault</a></li>
+          <li><a href="#radar-section">Convoy Radar Live GPS</a></li>
+          <li><a href="#syndicate-pass">Recruitment Clearance</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>OPERATIONAL HUBS</h4>
+        <ul>
+          <li>Seshachalam Hills, Andhra Pradesh</li>
+          <li>Tirupati Deep Ghats</li>
+          <li>Chennai Cargo Docks</li>
+          <li>Tokyo & Shanghai Underground Hubs</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>EMPIRE MOTTO</h4>
+        <div class="motto-box">
+          <div class="telugu-motto">తగ్గేదే లే!</div>
+          <div class="hindi-motto">झुकेगा नहीं साला!</div>
+          <div class="eng-motto">NEVER BOW DOWN.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 PUSHPA RAJ SYNDICATE. Tribute to Pushpa: The Rise & Pushpa: The Rule. Designed with Cinematic 3D WebGL Aesthetics.</p>
+      <p class="disclaimer">Fan conceptual exploration: "What if Pushpa had a website?"</p>
+    </div>
+  </footer>
+
+  <script defer src="three-scene.js?v=2"></script>
+  <script defer src="app.js?v=4"></script>
+</body>
+</html>
